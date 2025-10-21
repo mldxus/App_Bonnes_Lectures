@@ -1,0 +1,13 @@
+# Fichiers système et IDE
+.vscode/
+__pycache__/
+
+# Base de données
+db.sqlite3
+
+# Fichiers d'environnement (SECRETS)
+.env
+
+# Dépendances Python
+venv/
+*.egg-info/

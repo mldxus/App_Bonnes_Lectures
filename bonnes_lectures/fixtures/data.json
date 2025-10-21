@@ -1,0 +1,1 @@
+[{"model": "bonnes_lectures.book", "pk": 1, "fields": {"title": "Dune", "publisher": "Robert Laffont", "year": 1970, "isbn": "978-2266223287", "backCover": "Un classique de la SF...", "cover": false}}]

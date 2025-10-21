@@ -1,0 +1,24 @@
+{% extends "bonnes_lectures/base.html" %}
+
+{% block title %}Ajouter un Livre{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="h3 mb-0">Ajouter un nouveau livre</h1>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <hr>
+                    <button type="submit" class="btn btn-primary">Sauvegarder</button>
+                    <a href="{% url 'book-summary-list' %}" class="btn btn-secondary">Annuler</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

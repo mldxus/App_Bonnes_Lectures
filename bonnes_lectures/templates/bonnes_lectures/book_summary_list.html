@@ -1,0 +1,29 @@
+{% extends "bonnes_lectures/base.html" %}
+
+{% block title %}Liste des Livres{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h2">Liste de nos livres</h1>
+    <a href="{% url 'book-create' %}" class="btn btn-primary">Ajouter un livre</a>
+</div>
+
+<div class="list-group">
+    {% for book in books %}
+        <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+            <div>
+                <a href="{% url 'book-detail' book.pk %}" class="text-decoration-none h5">{{ book.title }}</a>
+                <p class="mb-1 text-muted">par {{ book.author }}</p>
+            </div>
+            <div>
+                <a href="{% url 'book-update' book.pk %}" class="btn btn-sm btn-outline-secondary">Modifier</a>
+                <a href="{% url 'book-delete' book.pk %}" class="btn btn-sm btn-outline-danger ms-2">Supprimer</a>
+            </div>
+        </div>
+    {% empty %}
+        <div class="list-group-item">
+            <p class="mb-0">Aucun livre n'est disponible pour le moment.</p>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}
