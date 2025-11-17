@@ -5,7 +5,7 @@ __pycache__/
 # Base de données
 db.sqlite3
 
-# Fichiers d'environnement (SECRETS)
+# Fichiers d'environnement
 .env
 
 # Dépendances Python
