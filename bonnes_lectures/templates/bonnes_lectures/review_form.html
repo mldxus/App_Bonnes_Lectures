@@ -1,0 +1,24 @@
+{% extends "bonnes_lectures/base.html" %}
+
+{% block title %}Ajouter un avis sur {{ book.title }}{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h1 class="h3 mb-0">Donner votre avis sur : {{ book.title }}</h1>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <hr>
+                    <button type="submit" class="btn btn-primary">Publier l'avis</button>
+                    <a href="{% url 'book-detail' book.pk %}" class="btn btn-secondary">Annuler</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

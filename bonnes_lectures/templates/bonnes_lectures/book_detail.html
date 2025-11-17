@@ -28,4 +28,31 @@
     </div>
 </div>
 
+<div class="card mt-4">
+    <div class="card-header">
+        <div class="d-flex justify-content-between align-items-center">
+            <h2 class="h4 mb-0">Avis sur ce livre</h2>
+            <a href="{% url 'review-create' book.pk %}" class="btn btn-primary btn-sm">Donner son avis</a>
+        </div>
+    </div>
+    <div class="card-body">
+        
+        {% for review in book.reviews.all|dictsortreversed:"publication_date" %}
+            <div class="border-bottom pb-2 mb-2">
+                <div class="d-flex justify-content-between align-items-center">
+                    <p class="mb-0"><strong>Note : {{ review.get_rating_display }}</strong></p>
+                    <div>
+                        <a href="{% url 'review-update' review.pk %}" class="btn btn-sm btn-outline-secondary">Modifier</a>
+                        <a href="{% url 'review-delete' review.pk %}" class="btn btn-sm btn-outline-danger ms-2">Supprimer</a>
+                    </div>
+                </div>
+                <p class="card-text mt-2">{{ review.text|linebreaks }}</p>
+                <small class="text-muted">Publié le {{ review.publication_date|date:"d F Y" }}</small>
+            </div>
+        {% empty %}
+            <p>Il n'y a pas encore d'avis pour ce livre.</p>
+        {% endfor %}
+    </div>
+</div>
+
 {% endblock %}

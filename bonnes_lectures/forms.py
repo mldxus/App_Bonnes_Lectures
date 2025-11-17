@@ -1,5 +1,5 @@
 from django import forms
-from .models import Book
+from .models import *
 import datetime
 
 class BookForm(forms.ModelForm):
@@ -12,3 +12,8 @@ class BookForm(forms.ModelForm):
     class Meta:
         model = Book
         fields = ['title', 'author', 'publisher', 'year', 'isbn', 'backCover']
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['text', 'rating']
