@@ -11,3 +11,15 @@ class Book(models.Model):
 
     def __str__(self):
         return self.title
+
+class Review(models.Model):
+    publication_date = models.DateTimeField(auto_now_add=True)
+    text = models.TextField()
+    rating = models.IntegerField(
+        choices=[(1, '★'), (2, '★★'), (3, '★★★'), (4, '★★★★'), (5, '★★★★★')]
+    )
+    
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, related_name='reviews')
+
+    def __str__(self):
+        return f"Avis pour {self.book.title} - {self.rating} étoiles"
