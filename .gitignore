@@ -11,3 +11,6 @@ db.sqlite3
 # Dépendances Python
 venv/
 *.egg-info/
+
+# TP02
+TP02/
