@@ -12,5 +12,8 @@ urlpatterns = [
     path('book/<int:book_pk>/review/new/', views.review_create, name='review-create'),
     path('review/<int:pk>/update/', views.review_update, name='review-update'),
     path('review/<int:pk>/delete/', views.review_delete, name='review-delete'),
+path('authors/', views.author_list, name='author-list'),
+    path('authors/new/', views.author_create, name='author-create'),
+    path('authors/<int:pk>/update/', views.author_update, name='author-update'),
+    path('authors/<int:pk>/delete/', views.author_delete, name='author-delete'),
 ]
-

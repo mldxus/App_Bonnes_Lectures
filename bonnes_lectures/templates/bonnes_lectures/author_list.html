@@ -1,0 +1,24 @@
+{% extends "bonnes_lectures/base.html" %}
+
+{% block title %}Liste des Auteurs{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1>Auteurs</h1>
+    <a href="{% url 'author-create' %}" class="btn btn-primary">Ajouter un auteur</a>
+</div>
+
+<div class="list-group">
+    {% for author in authors %}
+        <div class="list-group-item d-flex justify-content-between align-items-center">
+            <span>{{ author.first_name }} <strong>{{ author.last_name }}</strong></span>
+            <div>
+                <a href="{% url 'author-update' author.pk %}" class="btn btn-sm btn-secondary">Modifier</a>
+                <a href="{% url 'author-delete' author.pk %}" class="btn btn-sm btn-danger">Supprimer</a>
+            </div>
+        </div>
+    {% empty %}
+        <p>Aucun auteur enregistré.</p>
+    {% endfor %}
+</div>
+{% endblock %}

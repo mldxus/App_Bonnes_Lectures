@@ -17,3 +17,12 @@ class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = ['text', 'rating']
+
+class AuthorForm(forms.ModelForm):
+    class Meta:
+        model = Author
+        fields = ['first_name', 'last_name']
+        labels = {
+            'first_name': 'Prénom',
+            'last_name': 'Nom',
+        }

@@ -1,0 +1,17 @@
+{% extends "bonnes_lectures/base.html" %}
+
+{% block title %}Gérer un auteur{% endblock %}
+
+{% block content %}
+<h1>Enregistrer un auteur</h1>
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-success">Sauvegarder</button>
+            <a href="{% url 'author-list' %}" class="btn btn-secondary">Annuler</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

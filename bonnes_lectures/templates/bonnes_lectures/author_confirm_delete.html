@@ -1,0 +1,16 @@
+{% extends "bonnes_lectures/base.html" %}
+
+{% block title %}Supprimer l'auteur{% endblock %}
+
+{% block content %}
+<div class="alert alert-danger">
+    <h1>Supprimer {{ author.first_name }} {{ author.last_name }} ?</h1>
+    <p>Attention, si vous supprimez cet auteur, le champ "Auteur" des livres qu'il a écrits deviendra vide.</p>
+    
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Oui, supprimer</button>
+        <a href="{% url 'author-list' %}" class="btn btn-secondary">Annuler</a>
+    </form>
+</div>
+{% endblock %}

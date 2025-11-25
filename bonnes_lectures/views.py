@@ -84,3 +84,39 @@ def review_delete(request, pk):
         return redirect('book-detail', pk=book_pk)
         
     return render(request, 'bonnes_lectures/review_confirm_delete.html', {'review': review})
+
+ # 1. Liste des auteurs
+def author_list(request):
+    authors = Author.objects.all().order_by('last_name')
+    return render(request, 'bonnes_lectures/author_list.html', {'authors': authors})
+
+# 2. Créer un auteur
+def author_create(request):
+    if request.method == 'POST':
+        form = AuthorForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('author-list')
+    else:
+        form = AuthorForm()
+    return render(request, 'bonnes_lectures/author_form.html', {'form': form})
+
+# 3. Modifier un auteur
+def author_update(request, pk):
+    author = get_object_or_404(Author, pk=pk)
+    if request.method == 'POST':
+        form = AuthorForm(request.POST, instance=author)
+        if form.is_valid():
+            form.save()
+            return redirect('author-list')
+    else:
+        form = AuthorForm(instance=author)
+    return render(request, 'bonnes_lectures/author_form.html', {'form': form})
+
+# 4. Supprimer un auteur
+def author_delete(request, pk):
+    author = get_object_or_404(Author, pk=pk)
+    if request.method == 'POST':
+        author.delete()
+        return redirect('author-list')
+    return render(request, 'bonnes_lectures/author_confirm_delete.html', {'author': author})
