@@ -1,0 +1,24 @@
+{% extends "bonnes_lectures/base.html" %}
+
+{% block title %}Se connecter{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card mt-5">
+            <div class="card-header bg-primary text-white">
+                <h1 class="h4 mb-0">Connexion</h1>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Se connecter</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
