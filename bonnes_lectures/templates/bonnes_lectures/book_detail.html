@@ -19,7 +19,13 @@
     </div>
     
     <div class="card-body">
-        <p><strong>Auteur :</strong> {{ book.author }}</p>
+        <p><strong>Auteur(s) :</strong>
+            {% for author in book.authors.all %}
+                {{ author.first_name }} {{ author.last_name }}{% if not forloop.last %}, {% endif %}
+            {% empty %}
+                Aucun auteur renseigné.
+            {% endfor %}
+        </p>
         <p><strong>Éditeur :</strong> {{ book.publisher }}</p>
         <p><strong>Année :</strong> {{ book.year }}</p>
         <p><strong>ISBN :</strong> <span class="text-muted">{{ book.isbn }}</span></p>

@@ -26,7 +26,8 @@ def book_create(request):
         if form.is_valid():
             book = form.save(commit=False) 
             book.user = request.user    
-            book.save()                  
+            book.save() 
+            form.save_m2m()                 
             return redirect('book-detail', pk=book.pk)
     else:
         form = BookForm()

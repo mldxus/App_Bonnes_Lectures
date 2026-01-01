@@ -13,7 +13,11 @@
         <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
             <div>
                 <a href="{% url 'book-detail' book.pk %}" class="text-decoration-none h5">{{ book.title }}</a>
-                <p class="mb-1 text-muted">par {{ book.author }}</p>
+                <p class="mb-1 text-muted">par 
+                    {% for author in book.authors.all %}
+                        {{ author.first_name }} {{ author.last_name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
             </div>
             <div>
                 {% if user == book.user %}
