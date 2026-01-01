@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cover for {{ cover.isbn }}</title>
+</head>
+<body>
+    <h1>Couverture pour l'ISBN : {{ cover.isbn }}</h1>
+    
+    <img src="data:image/{{ cover.format }};base64,{{ cover.image_data }}" 
+         alt="Cover" 
+         style="max-width: 400px; border: 1px solid #ccc;">
+         
+    <p>Format : {{ cover.format }}</p>
+</body>
+</html>
