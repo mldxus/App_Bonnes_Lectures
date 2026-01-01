@@ -16,9 +16,11 @@
                 <p class="mb-1 text-muted">par {{ book.author }}</p>
             </div>
             <div>
-                <a href="{% url 'book-update' book.pk %}" class="btn btn-sm btn-outline-secondary">Modifier</a>
-                <a href="{% url 'book-delete' book.pk %}" class="btn btn-sm btn-outline-danger ms-2">Supprimer</a>
-            </div>
+                {% if user == book.user %}
+                    <a href="{% url 'book-update' book.pk %}" class="btn btn-sm btn-outline-secondary">Modifier</a>
+                    <a href="{% url 'book-delete' book.pk %}" class="btn btn-sm btn-outline-danger">Supprimer</a>
+                {% endif %}
+                </div>
         </div>
     {% empty %}
         <div class="list-group-item">

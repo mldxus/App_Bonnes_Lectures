@@ -9,10 +9,13 @@
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
         <h1 class="card-title h2 mb-0">{{ book.title }}</h1>
-        <div>
-            <a href="{% url 'book-update' book.pk %}" class="btn btn-secondary">Modifier</a>
-            <a href="{% url 'book-delete' book.pk %}" class="btn btn-danger">Supprimer</a>
-        </div>
+        
+        {% if user == book.user %}
+            <div>
+                <a href="{% url 'book-update' book.pk %}" class="btn btn-secondary">Modifier</a>
+                <a href="{% url 'book-delete' book.pk %}" class="btn btn-danger">Supprimer</a>
+            </div>
+        {% endif %}
     </div>
     
     <div class="card-body">
@@ -20,6 +23,7 @@
         <p><strong>Éditeur :</strong> {{ book.publisher }}</p>
         <p><strong>Année :</strong> {{ book.year }}</p>
         <p><strong>ISBN :</strong> <span class="text-muted">{{ book.isbn }}</span></p>
+        <p><strong>Propriétaire de la fiche :</strong> <em>{{ book.user.username }}</em></p>
         
         <hr>
         
@@ -36,16 +40,19 @@
         </div>
     </div>
     <div class="card-body">
-        
         {% for review in book.reviews.all|dictsortreversed:"publication_date" %}
             <div class="border-bottom pb-2 mb-2">
                 <div class="d-flex justify-content-between align-items-center">
-                    <p class="mb-0"><strong>Note : {{ review.get_rating_display }}</strong></p>
-                    <div>
-                        <a href="{% url 'review-update' review.pk %}" class="btn btn-sm btn-outline-secondary">Modifier</a>
-                        <a href="{% url 'review-delete' review.pk %}" class="btn btn-sm btn-outline-danger ms-2">Supprimer</a>
-                    </div>
+                    <p class="mb-0"><strong>Note : {{ review.get_rating_display }}</strong> <small class="text-muted">par {{ review.user.username }}</small></p>
+                    
+                    {% if user == review.user %}
+                        <div>
+                            <a href="{% url 'review-update' review.pk %}" class="btn btn-sm btn-outline-secondary">Modifier</a>
+                            <a href="{% url 'review-delete' review.pk %}" class="btn btn-sm btn-outline-danger ms-2">Supprimer</a>
+                        </div>
+                    {% endif %}
                 </div>
+
                 <p class="card-text mt-2">{{ review.text|linebreaks }}</p>
                 <small class="text-muted">Publié le {{ review.publication_date|date:"d F Y" }}</small>
             </div>
