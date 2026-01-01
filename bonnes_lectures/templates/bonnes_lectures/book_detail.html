@@ -1,10 +1,11 @@
 {% extends "bonnes_lectures/base.html" %}
+{% load i18n %}
 
-{% block title %}{{ book.title }} - Bonnes Lectures{% endblock %}
+{% block title %}{{ book.title }} - {% trans "Bonnes Lectures" %}{% endblock %}
 
 {% block content %}
 
-<a href="{% url 'book-summary-list' %}" class="btn btn-outline-secondary mb-3">&larr; Retour à la liste</a>
+<a href="{% url 'book-summary-list' %}" class="btn btn-outline-secondary mb-3">&larr; {% trans "Retour à la liste" %}</a>
 
 <div class="card">
     <div class="card-header d-flex justify-content-between align-items-center">
@@ -12,58 +13,71 @@
         
         {% if user == book.user %}
             <div>
-                <a href="{% url 'book-update' book.pk %}" class="btn btn-secondary">Modifier</a>
-                <a href="{% url 'book-delete' book.pk %}" class="btn btn-danger">Supprimer</a>
+                <a href="{% url 'book-update' book.pk %}" class="btn btn-secondary">{% trans "Modifier" %}</a>
+                <a href="{% url 'book-delete' book.pk %}" class="btn btn-danger">{% trans "Supprimer" %}</a>
             </div>
         {% endif %}
     </div>
     
     <div class="card-body">
-        <p><strong>Auteur(s) :</strong>
-            {% for author in book.authors.all %}
-                {{ author.first_name }} {{ author.last_name }}{% if not forloop.last %}, {% endif %}
-            {% empty %}
-                Aucun auteur renseigné.
-            {% endfor %}
-        </p>
-        <p><strong>Éditeur :</strong> {{ book.publisher }}</p>
-        <p><strong>Année :</strong> {{ book.year }}</p>
-        <p><strong>ISBN :</strong> <span class="text-muted">{{ book.isbn }}</span></p>
-        <p><strong>Propriétaire de la fiche :</strong> <em>{{ book.user.username }}</em></p>
-        
-        <hr>
-        
-        <h5 class="mt-4">Quatrième de couverture</h5>
-        <p class="card-text">{{ book.backCover|linebreaks }}</p>
-    </div>
+        <div class="row">
+            
+            {% if book.cover_image_b64 %}
+                <div class="col-md-3 text-center mb-3">
+                    <img src="data:image/{{ book.cover_format }};base64,{{ book.cover_image_b64 }}" 
+                         alt="{% trans 'Couverture' %}" class="img-fluid border rounded shadow-sm" style="max-height: 300px;">
+                </div>
+                <div class="col-md-9">
+            {% else %}
+                <div class="col-12">
+            {% endif %}
+
+                <p><strong>{% trans "Auteur(s)" %} :</strong>
+                    {% for author in book.authors.all %}
+                        {{ author.first_name }} {{ author.last_name }}{% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                        {% trans "Aucun auteur renseigné." %}
+                    {% endfor %}
+                </p>
+                <p><strong>{% trans "Éditeur" %} :</strong> {{ book.publisher }}</p>
+                <p><strong>{% trans "Année" %} :</strong> {{ book.year }}</p>
+                <p><strong>ISBN :</strong> <span class="text-muted">{{ book.isbn }}</span></p>
+                <p><strong>{% trans "Propriétaire de la fiche" %} :</strong> <em>{{ book.user.username }}</em></p>
+                
+                <hr>
+                
+                <h5 class="mt-4">{% trans "Quatrième de couverture" %}</h5>
+                <p class="card-text">{{ book.backCover|linebreaks }}</p>
+                
+            </div> </div> </div>
 </div>
 
 <div class="card mt-4">
     <div class="card-header">
         <div class="d-flex justify-content-between align-items-center">
-            <h2 class="h4 mb-0">Avis sur ce livre</h2>
-            <a href="{% url 'review-create' book.pk %}" class="btn btn-primary btn-sm">Donner son avis</a>
+            <h2 class="h4 mb-0">{% trans "Avis sur ce livre" %}</h2>
+            <a href="{% url 'review-create' book.pk %}" class="btn btn-primary btn-sm">{% trans "Donner son avis" %}</a>
         </div>
     </div>
     <div class="card-body">
         {% for review in book.reviews.all|dictsortreversed:"publication_date" %}
             <div class="border-bottom pb-2 mb-2">
                 <div class="d-flex justify-content-between align-items-center">
-                    <p class="mb-0"><strong>Note : {{ review.get_rating_display }}</strong> <small class="text-muted">par {{ review.user.username }}</small></p>
+                    <p class="mb-0"><strong>{% trans "Note" %} : {{ review.get_rating_display }}</strong> <small class="text-muted">{% trans "par" %} {{ review.user.username }}</small></p>
                     
                     {% if user == review.user %}
                         <div>
-                            <a href="{% url 'review-update' review.pk %}" class="btn btn-sm btn-outline-secondary">Modifier</a>
-                            <a href="{% url 'review-delete' review.pk %}" class="btn btn-sm btn-outline-danger ms-2">Supprimer</a>
+                            <a href="{% url 'review-update' review.pk %}" class="btn btn-sm btn-outline-secondary">{% trans "Modifier" %}</a>
+                            <a href="{% url 'review-delete' review.pk %}" class="btn btn-sm btn-outline-danger ms-2">{% trans "Supprimer" %}</a>
                         </div>
                     {% endif %}
                 </div>
 
                 <p class="card-text mt-2">{{ review.text|linebreaks }}</p>
-                <small class="text-muted">Publié le {{ review.publication_date|date:"d F Y" }}</small>
+                <small class="text-muted">{% trans "Publié le" %} {{ review.publication_date|date:"d F Y" }}</small>
             </div>
         {% empty %}
-            <p>Il n'y a pas encore d'avis pour ce livre.</p>
+            <p>{% trans "Il n'y a pas encore d'avis pour ce livre." %}</p>
         {% endfor %}
     </div>
 </div>

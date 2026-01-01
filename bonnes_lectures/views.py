@@ -4,6 +4,7 @@ from bonnes_lectures.forms import *
 from bonnes_lectures.models import *
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import PermissionDenied
+import requests
 
 def about(request):
     return render(request, 'bonnes_lectures/about.html')
@@ -13,8 +14,21 @@ def welcome(request):
 
 def book_detail(request, pk):
     book = get_object_or_404(Book, pk=pk)
-    return render(request, 'bonnes_lectures/book_detail.html', {'book': book})
+    
+    try:
+        # On appelle l'API sur le port 8081 avec l'ISBN du livre
+        url = f"http://localhost:8081/api/{book.isbn}/"
+        response = requests.get(url, timeout=1) 
+        
+        if response.status_code == 200:
+            data = response.json()
+            book.cover_image_b64 = data.get('image')
+            book.cover_format = data.get('format')
+    except Exception as e:
+        print(f"Erreur image: {e}")
+        pass
 
+    return render(request, 'bonnes_lectures/book_detail.html', {'book': book})
 def book_summary_list(request):
     books = Book.objects.all()
     return render(request, 'bonnes_lectures/book_summary_list.html', {'books': books})
