@@ -5,8 +5,6 @@ import datetime
 class BookForm(forms.ModelForm):
    
     YEAR_CHOICES = [(r, r) for r in range(datetime.date.today().year, 1900, -1)]
-    
-
     year = forms.ChoiceField(choices=YEAR_CHOICES, label="Année de publication")
 
     class Meta:
@@ -14,6 +12,10 @@ class BookForm(forms.ModelForm):
         fields = ['title', 'authors', 'publisher', 'year', 'isbn', 'backCover']
         
         widgets = {'authors': forms.CheckboxSelectMultiple(), }
+
+        help_texts = {
+            'Saisissez un ISBN-13 valide (ex : 978-2-070-54022-7).',
+        }
 
 class ReviewForm(forms.ModelForm):
     class Meta:

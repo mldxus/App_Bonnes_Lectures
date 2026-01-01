@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from .fields import IsbnField
 
 class Author(models.Model):
     first_name = models.CharField(max_length=100)
@@ -16,7 +17,7 @@ class Book(models.Model):
     
     publisher = models.CharField(max_length=200)
     year = models.IntegerField()
-    isbn = models.CharField(max_length=20, unique=True)
+    isbn = IsbnField(unique=True)
     backCover = models.TextField()
     cover = models.BooleanField(default=False)
     
