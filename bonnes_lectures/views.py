@@ -155,3 +155,9 @@ def author_delete(request, pk):
         author.delete()
         return redirect('author-list')
     return render(request, 'bonnes_lectures/author_confirm_delete.html', {'author': author})
+
+@login_required
+def my_review_list(request):
+    #QUE les avis de l'utilisateur courant
+    reviews = Review.objects.filter(user=request.user).order_by('-publication_date')
+    return render(request, 'bonnes_lectures/my_review_list.html', {'reviews': reviews})
